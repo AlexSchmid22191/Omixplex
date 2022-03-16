@@ -1,11 +1,10 @@
 #include <Arduino.h>
-#include <ArduinoRS485.h>
 #include <ArduinoModbus.h>
 
-const int numCoils = 3;
+const byte numCoils = 16;
 
 // Pin definition
-const byte relay_pins[16] = {A0, A1, A2, A3, A4, A5, A6, A7, 9, 8, 7, 6, 5, 4, 3, 2};
+const byte relay_pins[numCoils] = {5, 9, A4, A0, 4, 8, A5, A1, 3, 7, A6, A2, 2, 6, A7, A3};
 
 void setup()
 {
@@ -23,15 +22,14 @@ void setup()
     while (1);
   }
   ModbusRTUServer.configureCoils(0x00, numCoils);
-
 }
 
 void loop()
 {
   ModbusRTUServer.poll();
-  for(byte coil = 0; coil<16; coil++)
+  for(byte coil = 0; coil<numCoils; coil++)
   {
-    bool coilValue = ModbusRTUServer.coilRead(coil);
+    bool coilValue = (bool)ModbusRTUServer.coilRead(coil);
     digitalWrite(relay_pins[coil], coilValue);
   }
 }
