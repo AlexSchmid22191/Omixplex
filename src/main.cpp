@@ -4,7 +4,8 @@
 const byte numCoils = 16;
 
 // Pin definition
-const byte relay_pins[numCoils] = {5, 9, A4, A0, 4, 8, A5, A1, 3, 7, A6, A2, 2, 6, A7, A3};
+const byte relay_pins[numCoils] = {5, 9, A4, A0, 4, 8, A5, A1, 3, 7, 11, A2, 2, 6, 10, A3};
+
 
 void setup()
 {
@@ -13,7 +14,8 @@ void setup()
     pinMode(pin, OUTPUT);
     digitalWrite(pin, LOW);
   }
-  
+  pinMode(LED_BUILTIN, HIGH);
+
   Serial.begin(9600);
   while (!Serial);
   if (!ModbusRTUServer.begin(1, 9600))
